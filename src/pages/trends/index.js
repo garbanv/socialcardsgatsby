@@ -5,7 +5,7 @@ const TrendsPage = ({location}) => {
 
   const [data,setData]=useState([])
   const OsTrendsReportId=location.pathname
-  const id=location.state.url
+  const id=location?.state?.url || ""
 
   console.log(id)
 
