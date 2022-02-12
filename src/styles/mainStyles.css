@@ -1,0 +1,44 @@
+body {
+    color:var(--russian-violet-dark) !important;
+}
+
+/* COLORS */
+:root {
+    --russian-violet-dark: #1b014c;
+    --russian-violet-light: #e5ddf6;
+    --sunglow-dark: #ffd23f;
+    --sunglow-light: #ffe89e;
+    --red-orange-dark: #fb5012;
+    --red-orange-light: #fed2c2;
+    --fluorecent-blue-dark: #01fdf6;
+    --fluorecent-blue-light: #80fefa;
+    --lavender-blue-dark: #cbbaed;
+    --lavender-blue-light: #e5ddf6;
+    --light-coral-dark: #ef767a;
+    --light-coral-light: #fad8d9;
+    --sea-green-dark: #23f0c7;
+    --sea-green-light: #e0fdf7;
+    --middle-blue-purple-dark: #7d7abc;
+    --middle-blue-purple-light: #edecf5;
+    --ob-dark: #fb5012;
+    --ob-light: #fdece6;
+    --og-dark: #632fae;
+    --og-light: #ebe0fd;
+    --oh-dark: #0956fc;
+    --oh-light: #e2ebfd;
+    --os-dark: #0ce6a3;
+    --os-light: #e3f9f2;
+    --oe-dark:#289f94;
+    --oe-light:#85ffed;
+    --ob-sub3: #fbdace;
+    --og-sub3: #d8c1fb;
+    --oh-sub3: #c6d7fc;
+    --os-sub3: #c7f3e5;
+    --labs-dark: #a60073;
+    --labs-sub3: #e6add4;
+    
+  }
+
+p{
+color:var(--russian-violet-dark) !important;
+}
