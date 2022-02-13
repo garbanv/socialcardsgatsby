@@ -26,13 +26,6 @@ module.exports = {
         },
       },
       {
-        resolve: `gatsby-source-filesystem`,
-        options: {
-          name: `static`,
-          path: `${__dirname}/src/static`,
-        },
-      },
-      {
         resolve: `gatsby-source-strapi`,
         options: {
           apiURL: `https://websiteserver-ds7cf.ondigitalocean.app`,
