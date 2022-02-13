@@ -1,77 +1,99 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Helmet from 'react-helmet'
-import { useStaticQuery, graphql } from 'gatsby'
+/**
+ * SEO component that queries for data with
+ *  Gatsby's useStaticQuery React hook
+ *
+ * See: https://www.gatsbyjs.com/docs/use-static-query/
+ */
 
-const Seo = ({ customTitle, customDescription, customUrl, customImage,title,img }) => {
-  const {
-    site: {
-      siteMetadata: { siteUrl, image, description, language, keywords },
-    },
-  } = useStaticQuery(graphql`
-    {
-      site {
-        siteMetadata {
-        siteUrl
-          title
-          description
+ import React from "react"
+ import PropTypes from "prop-types"
+ import { Helmet } from "react-helmet"
+ import { useStaticQuery, graphql } from "gatsby"
+ 
+ function SEO({ description, lang, meta, title,img }) {
 
-        }
-      }
-    }
-  `)
+   const { site } = useStaticQuery(
+     graphql`
+       query {
+         site {
+           siteMetadata {
+             title
+             description
+             author
+             siteUrl
+           }
+         }
+       }
+     `
+   )
+ 
+   const metaDescription = description || site.siteMetadata.description
+   const defaultTitle = site.siteMetadata?.title
+   const siteUrl = site.siteMetadata?.siteUrl
 
+   return (
+     <Helmet
+       htmlAttributes={{
+         lang,
+       }}
+       title={title}
+       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+       meta={[
+         {
+           name: `description`, content: `We measure the value of open ecosystems`,
+         },
+         {
+           name:"title", property: `og:title`, content:title,
+         },
+         {
+           property: `og:description`,content: `We measure the value of open ecosystems`,
+         },
+         {
+           property: `og:type`,content: `website`,
+         },
 
-  const seoDescription = customDescription
-    ? customDescription.seoDescription
-    : description
-  const seoUrl = customUrl ? `${siteUrl}/${customUrl}` : siteUrl
-  const seoImage = customImage
-    ? `https://${customImage.gatsbyImageData.images.fallback.src.replace(
-        /\/\//g,
-        ''
-      )}`
-    : `${siteUrl}/${image}`
-
-  return (
-    <Helmet>
-      {/* Default / HTML */}
-      <html lang={language} />
-      <title>{title}</title>
-      <link rel="canonical" href={seoUrl} />
-
-      {/* Primary Meta Tags */}
-      <meta name="title" content={title} />
-      <meta name="description" content={seoDescription} />
-      <meta name="image" content={img} />
-      <meta name="keywords" content={keywords ? keywords.join(', ') : null} />
-
-      {/* Open Graph / Facebook  */}
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={seoUrl} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={seoDescription} />
-      <meta property="og:image" content={img} />
-
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:url" content={seoUrl} />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={seoDescription} />
-      <meta name="twitter:image" content={img} />
-    </Helmet>
-  )
-}
-
-Seo.propTypes = {
-  /** A custom HTML title that overwrites the default title */
-  customTitle: PropTypes.string,
-  /** A custom meta description that overwrites the default description */
-  customDescription: PropTypes.string,
-  /** A custom meta url that overwrites the default url */
-  customUrl: PropTypes.string,
-  /** A custom open graph image that overwrites the default image */
-  customImage: PropTypes.any,
-}
-
-export default Seo
+         { property: "og:url", content:siteUrl },
+ 
+         {
+           name:"image", property: "og:image",content:img,
+         },
+         {
+           name:"author", content:siteUrl
+         },
+         {
+           name: `twitter:card`,content: `summary_large_image`,
+         },
+         {
+           name: `twitter:creator`,content: site.siteMetadata?.author || ``,
+         },
+         {
+           name: `twitter:title`,content: title,
+         },
+         {
+           name: `twitter:description`, content: `We measure the value of open ecosystems`,
+         },
+         {
+           name:"twitter:image",content:img
+         },
+         {
+          name:"twitter:site",content:siteUrl
+        },
+       ].concat(meta)}
+     />
+   )
+ }
+ 
+ SEO.defaultProps = {
+   lang: `en`,
+   meta: [],
+   description: ``,
+ }
+ 
+ SEO.propTypes = {
+   description: PropTypes.string,
+   lang: PropTypes.string,
+   meta: PropTypes.arrayOf(PropTypes.object),
+   title: PropTypes.string.isRequired,
+ }
+ 
+ export default SEO

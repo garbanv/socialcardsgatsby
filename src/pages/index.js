@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from "react";
-import { Link } from "gatsby";
+import { Link,graphql } from "gatsby";
 import Layout from "../components/Layout";
 import SEO from '../components/Seo'
 
@@ -7,20 +7,20 @@ import SEO from '../components/Seo'
 
 
 // markup
-const IndexPage = () => {
+const IndexPage = ({data}) => {
 
 
-const [data,setData]=useState([])
+/* const [data,setData]=useState([]) */
 
-useEffect(()=>{
+/* useEffect(()=>{
   fetch('https://websiteserver-ds7cf.ondigitalocean.app/posts')
   .then(res=>res.json())
   .then(response=>setData(response))
 },[])
-
+ */
 const featured_image=data && data[0]?.featured_image.formats.large.url
 
-console.log("data",data)
+
   return (
     <Layout>
       <SEO title="Homepage" img={featured_image}/>
@@ -32,18 +32,18 @@ console.log("data",data)
            
             
             <ul className="divide-y-2 divide-gray-100">
-             {data.map((x,index)=>{
+             {data.allStrapiPost.edges.map((x,index)=>{
                return (
                 <li
                 className="p-3 my-2 "
-                key={x.strapiId}
+                key={x.node.strapiId}
               
               >
                 <span>
                   <a>
-                    <Link to={`/trends/`}
-                    href={x.id}
-                    state={{ url: x.id }}>{x.title}</Link>
+                    <Link to={`/${x.node.slug}`}
+                 
+                    state={{ url: x.node.slug }}>{x.node.title}</Link>
                   </a>
                 </span>
               </li>
@@ -57,6 +57,22 @@ console.log("data",data)
   );
 };
 
-
+export const query = graphql`
+  {
+    allStrapiPost {
+      edges {
+        node {
+          id
+          featured_image {
+            url
+          }
+          slug
+          title
+          content
+        }
+      }
+    }
+  }
+`
 
 export default IndexPage;
